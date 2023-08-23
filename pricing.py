@@ -7,6 +7,7 @@ Problemas y cosas que revolver.
 
 Uno de los problemas es el de la función, habrá que cogerlo por tomar como uno de los argumentos los strike price y que tipo son y luego definir la función externa de payOff
 
+Mirar más variance reduction methods (control variates pinta bien pero parece complicado) 
 """
 
 def euler_GBM(number_of_assets, initial_values, num_steps, T, means, std_devs, cov_matrix, ant_variates = False): 
