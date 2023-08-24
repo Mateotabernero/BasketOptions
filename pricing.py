@@ -1,6 +1,5 @@
 import numpy as np 
-import math 
-import main 
+import math
 import paths
 
 """
