@@ -41,22 +41,22 @@ def milstein_GBM(number_of_assets, initial_values, num_steps, T, meansm std_devs
 
 
 def price (number_of_assets, weights, initial_values, num_steps, T, means, std_devs, cov_matrix, payOff, num_simulations = 10000, ant_variates = False, integration_method = 'E'): 
-    vPayOff = np.vectorize(payOff) 
 
     values = np.zeros(num_simulations) 
     if ant_variates: 
         ant_values = np.zeros(num_simulations) 
-    for i in range(num_simulations):
+    for _ in range(num_simulations):
         
         if not ant_variates:
             S = integration_method(number_of_assets, initial_values, num_steps, T, means, std_devs, cov_matrix) 
             values[i] = np.dot(vPayOff(S[:, num_steps]), weights) 
         else: 
             S, ant_S =  integration_method(number_of_assets, initial_values, num_steps, T, means, std_devs, cov_matrix) 
-            values[i] = np.dot(vPayOff(S[:, num_steps]), weights)
-            ant_values[i] = np.dot(vPayOff(S[:,num_steps]), weights
+            values[i] = np.dot(np.vectorize(lambda f, v: f(v))(function_array, S[:, -1]), weights)
+            ant_values[i] = np.dot(np.vectorize(lambda f, v: f(v))(function_array, ant_S[:, -1]), weights)
 
-    
-    V = np.mean(values)
-
+    if not ant_variates: 
+        V = np.mean(values)   
+    else:
+        V = 1/2*(np.mean(values) + np.mean(ant_values)) 
     
