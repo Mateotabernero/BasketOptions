@@ -1,6 +1,7 @@
- 
+import numpy as np 
+import math 
 
-ef euler_GBM(number_of_assets, initial_values, num_steps, T, means, std_devs, cov_matrix, ant_variates = False): 
+def euler_GBM(number_of_assets, initial_values, num_steps, T, means, std_devs, cov_matrix, ant_variates = False): 
     delta_t = T/num_steps 
     S = np.ones((number_of_assets, num_steps +1))  
     S[:,0] = initial_values
